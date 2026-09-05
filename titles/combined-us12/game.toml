@@ -1,0 +1,54 @@
+# Autofilled by tools/new_project_layout/probe_disc.py from your legal dump.
+# Review before shipping. Runtime quirks / overlay seeds still need hand work.
+
+[game]
+name = "Gran Turismo 2 Combined (NTSC-U 1.2 base)"
+id = "SCUS-94488"
+players = 2
+exe = "disc/SCUS_944.88"
+disc = "disc/Gran Turismo 2 Combined Disc (USA).cue"
+load_address = "0x80010000"
+entry_pc = "0x8005D600"
+text_size = "0x00099000"
+stack_base = "0x00000000"
+
+# Digests are for data Track 01 (first BINARY FILE / TRACK 01).
+[prepare_disc]
+out_dir = "disc"
+bin_name = "Gran Turismo 2 Combined Disc (USA).bin"
+cue_name = "Gran Turismo 2 Combined Disc (USA).cue"
+boot_exe = "SCUS_944.88"
+known_sizes = [1044450288]
+known_md5 = [
+  "d267a33402ff413e781d8539b6e5715b",
+]
+known_sha1 = [
+  "40e4e82bb85b71bab279b523038c52c1a13f1b4f",
+]
+known_crc32 = [
+  "8bae783d",
+]
+
+[recompiler]
+bios_config = "../../psxrecomp/bios/OpenBIOS.toml"
+seeds = "seeds/ghidra_funcs.txt"
+out_dir = "generated"
+strict = true
+
+[runtime]
+window_title = "Gran Turismo 2 Combined (NTSC-U 1.2 base) Recompiled"
+memcard_dir = "saves"
+
+[video]
+renderer = "opengl"
+aspect_ratio = "4:3"
+
+[controller]
+default_mode = "digital"
+
+# Online mount gate: digests + track count + optional TOC fingerprint
+# (see docs/NETPLAY.md).
+[netplay]
+require_cue = true
+required_tracks = 1
+required_disc_fp = "40be8fdc9369f69f2dd9f661671ac70a8c315c6ae465ed963978e0275dc936ed"

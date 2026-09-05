@@ -433,38 +433,48 @@ cue_for_bin() {
 
     cue="${bin%.*}.cue"
 
-    bname="$(basename "$bin")"
+    # GT2_SAFE_SOURCE_CUE_V2
+    #
+    # Dumps fornecidos pelo usuário são entrada somente leitura.
+    # Nunca editar, substituir ou criar .bak ao lado do CUE original.
 
-    if [ ! -f "$cue" ] \
-        || ! grep -qF "$bname" "$cue" 2>/dev/null
+    if [ -f "$cue" ] \
+        && grep -aEiq \
+            '^[[:space:]]*TRACK[[:space:]]+[0-9]+' \
+            "$cue"
     then
 
-        if [ -f "$cue" ]; then
-
-            cp -f \
-                "$cue" \
-                "$cue.bak"
-
-            echo \
-                "  corrigindo $(basename "$cue")" \
-                >&2
-
-        else
-
-            echo \
-                "  criando $(basename "$cue")" \
-                >&2
-
-        fi
-
-        printf \
-            'FILE "%s" BINARY\r\n  TRACK 01 MODE2/2352\r\n    INDEX 01 00:00:00\r\n' \
-            "$bname" \
-            > "$cue"
+        printf '%s' "$cue"
+        return 0
 
     fi
 
-    printf '%s' "$cue"
+    generated_dir="$SRC/.audit/generated-cues"
+
+    mkdir -p "$generated_dir"
+
+    fallback="$generated_dir/$(basename "${bin%.*}").generated.cue"
+
+    if [ -f "$cue" ]; then
+
+        echo \
+            "  aviso: CUE original inválido; preservando $(basename "$cue")" \
+            >&2
+
+    else
+
+        echo \
+            "  aviso: CUE ausente; gerando descrição temporária" \
+            >&2
+
+    fi
+
+    printf \
+        'FILE "%s" BINARY\r\n  TRACK 01 MODE2/2352\r\n    INDEX 01 00:00:00\r\n' \
+        "$(realpath "$bin")" \
+        > "$fallback"
+
+    printf '%s' "$fallback"
 }
 
 while IFS= read -r -d '' bin; do
