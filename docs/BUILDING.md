@@ -130,6 +130,8 @@ straight into the other disc, no launcher stop-over.
 
 ## Linux (build and run from the same tree)
 
+> **Fork convenience:** [`tools-linux/setup_gt2.sh`](../tools-linux/setup_gt2.sh) automates the native Linux baseline and writes an audit report. See [`LINUX_NATIVE.md`](LINUX_NATIVE.md).
+
 The tree builds natively on Linux (this is how the port is developed and
 compared against DuckStation). Debian/Ubuntu packages: `build-essential cmake
 ninja-build git python3` plus the X11/GL dev headers SDL needs

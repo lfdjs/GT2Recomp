@@ -18,6 +18,7 @@ saves/
 build/
 build-win/
 build-dbg/
+build-linux/
 release/
 !tools-win/dev/release/
 
@@ -47,3 +48,7 @@ build-retail/
 titles/*/build.log
 titles/*/configure.log
 titles/*/generate.log
+
+
+# Local portability/build audit reports
+.audit/
