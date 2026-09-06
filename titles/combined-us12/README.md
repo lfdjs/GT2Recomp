@@ -32,7 +32,7 @@ Still pending before the Linux vanilla baseline is considered broadly
 validated:
 
 - Simulation Mode
-- intentional memory-card save/write/load test
+- memory-card save/write/reload: confirmed
 - audio validation
 - longer soak testing
 
@@ -41,6 +41,24 @@ functional, but visible stutter and high resident-memory usage have been
 recorded for profiling after functional validation is complete.
 
 See `docs/LINUX_US12_BRINGUP.md` for the engineering checkpoint.
+
+## Save persistence
+
+The native Linux baseline now supports persistent PS1 memory-card data.
+
+A controlled two-process test confirmed:
+
+- existing card loading
+- card-image modification after an in-game session
+- increased occupied-block count
+- identical post-save card hash after a complete runtime restart
+- clean runtime exit in both sessions
+
+Memory-card persistence is therefore considered operational for the current
+Linux baseline.
+
+Remaining functional validation focuses primarily on Simulation Mode,
+audio, and longer soak testing.
 
 ## Source-disc policy
 

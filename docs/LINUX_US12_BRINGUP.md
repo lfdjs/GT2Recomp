@@ -369,3 +369,87 @@ Still pending:
 
 The project should preserve this vanilla baseline before enabling
 revision-specific enhancements or introducing portability abstractions.
+
+## Memory-card save persistence checkpoint
+
+Checkpoint date: 2026-09-05
+
+The Linux NTSC-U 1.2 Combined baseline has now passed an intentional
+memory-card write and process-restart persistence test.
+
+Initial slot-1 card:
+
+    size             = 131072 bytes
+    occupied blocks  = 4
+    SHA-256          = 8d30ee9396b7e6eaeea941119990a689d9640e187ce002afab1330d73ff46998
+
+After the first interactive session:
+
+    size             = 131072 bytes
+    SHA-256          = b9c797086bdd0053921b7a340c1585db9d9b2b662a9bea1e092ecc3940d5cc01
+
+The changed hash proves that the card image was modified by the runtime/game
+session.
+
+After a complete runtime shutdown and restart, slot 1 was loaded as:
+
+    occupied blocks  = 7
+
+and retained exactly the same post-save SHA-256:
+
+    b9c797086bdd0053921b7a340c1585db9d9b2b662a9bea1e092ecc3940d5cc01
+
+Therefore the following paths are now confirmed:
+
+    existing card read       PASS
+    game card write          PASS
+    host file persistence    PASS
+    reload after restart     PASS
+
+Slot 2 remained unchanged, as expected.
+
+Both test processes exited cleanly:
+
+    SESSION_A_ERROR_COUNT = 0
+    SESSION_B_ERROR_COUNT = 0
+
+    SESSION_A_EXIT_CODE   = 0
+    SESSION_B_EXIT_CODE   = 0
+
+No SIGTERM or SIGKILL was required.
+
+The diagnostic classified the result as:
+
+    SAVE_WRITE_STATUS       = PASS
+    SAVE_FILE_PERSISTENCE   = PASS
+    RUNTIME_STABILITY       = PASS
+
+Backups of the pre-test memory cards were retained in the local audit
+directory and are intentionally not version-controlled.
+
+### Remaining functional validation
+
+Before declaring the Linux vanilla baseline broadly validated, the following
+items remain useful:
+
+- explicit Simulation Mode workflow checkpoint
+- audio/music/SFX validation
+- longer-duration soak
+
+Performance optimization is now an independent workstream.
+
+Known performance observations to investigate later include:
+
+- visible gameplay stutter
+- frame pacing
+- current internal renderer scale of 5x
+- CPU/GPU utilization
+- generated-code working set
+- resident-memory growth/page faults
+- debug-tool overhead
+- OpenGL synchronization
+- scheduler behavior
+- CD/XA streaming stalls
+
+Do not mix these optimization experiments with revision-specific gameplay
+patches until a performance baseline has been measured.
