@@ -8,32 +8,39 @@ against NTSC-U 1.1 and remain intentionally disabled for this profile.
 
 ## Current Linux status
 
-Confirmed:
+The NTSC-U 1.2 Combined profile is now confirmed playable on native
+Linux x86-64.
 
-- native Linux x86-64 runtime builds
-- OpenBIOS boots
-- SDL/OpenGL initialize
-- DualSense is detected
-- disc and memory cards initialize
-- execution reaches GT2 program address space
+Validated:
 
-The live diagnostic reached approximately frame 735 with:
+- OpenBIOS boot
+- GT2 title sequence
+- Arcade Mode menus
+- road-race gameplay
+- rally gameplay
+- replay rendering
+- DualSense gameplay input
+- CD/XA streaming
+- repeated gameplay transitions
+- multi-minute runtime stability
+- clean process exit
 
-    COP0 EPC = 0x8007C558
-    RA       = 0x8007AB3C
-    SP       = 0x801FFE58
+The current baseline remains intentionally vanilla. GT2 enhancement
+patches verified only for NTSC-U 1.1 remain disabled.
 
-No heap-corruption error was observed during the controlled live run.
+Still pending before the Linux vanilla baseline is considered broadly
+validated:
 
-Still pending:
+- Simulation Mode
+- intentional memory-card save/write/load test
+- audio validation
+- longer soak testing
 
-- visible title screen confirmation
-- main menu confirmation
-- reliable menu navigation
-- first race
-- race video/audio/input validation
+Performance optimization is a separate later milestone. Gameplay is
+functional, but visible stutter and high resident-memory usage have been
+recorded for profiling after functional validation is complete.
 
-See `docs/LINUX_US12_BRINGUP.md` for the complete resumable checkpoint.
+See `docs/LINUX_US12_BRINGUP.md` for the engineering checkpoint.
 
 ## Source-disc policy
 

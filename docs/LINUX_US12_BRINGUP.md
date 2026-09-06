@@ -265,3 +265,107 @@ Ele ainda não comprova menu funcional ou primeira corrida.
 
 A criação de uma Platform API e o port para Nintendo Switch devem continuar
 depois da validação do primeiro menu e da primeira corrida no Linux.
+
+## Playable Linux baseline checkpoint
+
+Checkpoint: 2026-09-05
+
+The Combined NTSC-U 1.2 Linux profile has now progressed beyond initial
+bring-up and is confirmed playable in Arcade Mode.
+
+Validated during interactive native Linux sessions:
+
+- visible GT2 title sequence
+- Arcade Mode title/menu
+- Game Selection
+- Level Selection
+- Car Selection
+- Course Selection
+- Starting Grid
+- Road Race gameplay
+- Rally gameplay
+- replay rendering
+- DualSense gameplay input
+- HUD and 3D rendering
+- CD-ROM streaming
+- XA sector delivery
+- repeated gameplay transitions
+- approximately eight minutes of continuous runtime testing
+- clean process exit
+- no fatal/runtime/dispatch exception detected by the diagnostic filter
+
+The full-cycle diagnostic finished near frame 26280 with active 3D
+rendering and active CD/XA traffic.
+
+The runtime completed with:
+
+    RUNTIME_ERROR_COUNT=0
+    RUNTIME_EXIT_CODE=0
+    FORCED_TERM=0
+    FORCED_KILL=0
+
+### Memory-card status
+
+Both 128 KiB memory-card images were detected successfully.
+
+Slot 1 was loaded with four occupied blocks, which confirms that existing
+card data can be recognized.
+
+The memory-card hashes did not change during the full-cycle diagnostic:
+
+    CARD1_CHANGED=NO
+    CARD2_CHANGED=NO
+
+Therefore memory-card reading is considered operational, but an intentional
+save/write/load cycle still needs to be tested.
+
+### Performance backlog
+
+The runtime remains functionally playable but visible stutter has been
+reported during gameplay.
+
+Performance work is intentionally deferred until the vanilla functional
+baseline is complete.
+
+Items to investigate later include:
+
+- frame pacing
+- CPU usage
+- GPU usage
+- internal resolution scale
+- current 5x renderer configuration
+- debug/instrumentation overhead
+- page faults and resident code growth
+- generated-code working set
+- OpenGL synchronization
+- scheduler behavior
+- CD/XA streaming stalls
+
+Resident memory grew substantially during the longer tests while VmData
+eventually stabilized. This is not yet classified as a memory leak.
+
+### Current milestone status
+
+Confirmed:
+
+    Native Linux build       PASS
+    OpenBIOS boot            PASS
+    GT2 executable           PASS
+    Visible presentation     PASS
+    Menus                    PASS
+    Arcade Mode              PASS
+    Road Race                PASS
+    Rally                    PASS
+    Replay                   PASS
+    Gameplay input           PASS
+    Multi-minute stability   PASS
+
+Still pending:
+
+    Simulation Mode          PENDING
+    Save write/load          PENDING
+    Audio validation         PENDING
+    Long soak                PENDING
+
+The project should preserve this vanilla baseline before enabling
+revision-specific enhancements or introducing portability abstractions.
